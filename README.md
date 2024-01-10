@@ -377,7 +377,7 @@ Here are our Jenkins pipeline stages
 We have created an environment variable for our ECR repository url
 ```
     environment {
-        registry = "185439933271.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo"
+        registry = "934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo"
     }
 ```
 
@@ -386,7 +386,7 @@ We have created an environment variable for our ECR repository url
 ```
         stage('Git Checkout') {
             steps {
-               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/deleonab/cicd-jenkins-docker-helm-kubernetes.git']])
+               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/arvingre/cicd-jenkins-docker-helm-kubernetes.git']])
             }
         }
 ```
@@ -427,14 +427,14 @@ The push command is available in our ECR Registry
 Select your repo and click the view push commands button.
 ![get push command](./images/ecr1.png)
 Retrive an identification token and authenticate the docker client by running the AWSCLI command below
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 185439933271.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com
 ![get ecr token](./images/ecr2.png)
 ```
         stage('Push Docker Image') {
             steps {
                script{
-                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 185439933271.dkr.ecr.us-east-1.amazonaws.com'
-                   sh'docker push 185439933271.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo:$BUILD_NUMBER'
+                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
+                   sh'docker push 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo:$BUILD_NUMBER'
                }
             }
         }
@@ -461,12 +461,12 @@ pipeline {
     agent any
     
     environment {
-        registry = "185439933271.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo"
+        registry = "934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo"
     }
     stages {
         stage('Git Checkout') {
             steps {
-               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/deleonab/cicd-jenkins-docker-helm-kubernetes.git']])
+               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/arvingre/cicd-jenkins-docker-helm-kubernetes.git']])
             }
         }
         stage('Build Artifact') {
@@ -490,8 +490,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                script{
-                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 185439933271.dkr.ecr.us-east-1.amazonaws.com'
-                   sh'docker push 185439933271.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo:$BUILD_NUMBER'
+                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
+                   sh'docker push 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo:$BUILD_NUMBER'
                }
             }
         }
