@@ -338,7 +338,7 @@ sudo su - jenkins
 ```
 Run command to create EKS cluster with 2 worker nodes
 ```
-eksctl create cluster --name demo-eks --region us-east-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2 
+eksctl create cluster --name demo-eks --region ap-southeast-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2 
 ```
 Verify the cluster has been created by viewing the 2 worker nodes. We have already installed Kubectl on the Jenkins instance.
 
@@ -427,13 +427,13 @@ The push command is available in our ECR Registry
 Select your repo and click the view push commands button.
 ![get push command](./images/ecr1.png)
 Retrive an identification token and authenticate the docker client by running the AWSCLI command below
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com
 ![get ecr token](./images/ecr2.png)
 ```
         stage('Push Docker Image') {
             steps {
                script{
-                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
+                   sh'aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
                    sh'docker push 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo:$BUILD_NUMBER'
                }
             }
@@ -490,7 +490,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                script{
-                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
+                   sh'aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
                    sh'docker push 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo:$BUILD_NUMBER'
                }
             }
@@ -551,10 +551,10 @@ The external IP is our LoadBalancer url to view our application in a browser
 ```
 jenkins@ip-172-31-53-176:~$ kubectl get svc -n helm-deployment
 NAME            TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)        AGE
-first-mychart   LoadBalancer   10.100.118.220   ad94ffdc78810478780c6a533fb2eb6a-2046723893.us-east-1.elb.amazonaws.com   80:30155/TCP   2d
+first-mychart   LoadBalancer   10.100.118.220   ad94ffdc78810478780c6a533fb2eb6a-2046723893.ap-southeast-1.elb.amazonaws.com   80:30155/TCP   2d
 ```
 
-Let's go to this url in our browser ad94ffdc78810478780c6a533fb2eb6a-2046723893.us-east-1.elb.amazonaws.com
+Let's go to this url in our browser ad94ffdc78810478780c6a533fb2eb6a-2046723893.ap-southeast-1.elb.amazonaws.com
 
 
 ![final app](./images/final.png)

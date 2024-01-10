@@ -35,7 +35,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                script{
-                   sh'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
+                   sh'aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com'
                    sh'docker push 934891041601.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd-repo:$BUILD_NUMBER'
                }
             }
